@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app.kubernetes.io/name: {{ .Values.app-name }}
+  ports:
+  - name: HTTP
+    protocol: TCP
+    port: 8080
+    targetPort: 80

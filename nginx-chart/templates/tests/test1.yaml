@@ -8,10 +8,10 @@ metadata:
 spec:
   containers:
     - name: curl
-      image: curlimages/curl:7.69.0
+      image: curlimages/curl:latest
       command:
         - sh
         - -c
         - |
-          curl https://postman-echo.com/get?test=2
+          curl nginx-service.default.svc.cluster.local:8080
   restartPolicy: Never

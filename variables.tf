@@ -1,21 +1,11 @@
 variable "project_id" {
   description = "project id"
-  default     = "terraform-gke-311314"
+  default     = "terraform-gke-311221"
 }
 
 variable "region" {
   description = "region"
   default     = "us-west4"
-}
-
-variable "username" {
-  default     = ""
-  description = "gke username"
-}
-
-variable "password" {
-  default     = ""
-  description = "gke password"
 }
 
 variable "nodes" {
