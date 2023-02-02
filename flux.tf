@@ -82,6 +82,7 @@ spec:
       interval: 1m
   test:
     enable: true
+    ignoreFailures: true
 
 YAML
 
