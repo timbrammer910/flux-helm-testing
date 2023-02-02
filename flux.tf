@@ -74,6 +74,7 @@ spec:
   chart:
     spec:
       chart: ./nginx-chart
+      ReconcileStragey: Revision
       sourceRef:
         kind: GitRepository
         name: "${kubectl_manifest.flux_git_repo_source.name}"
