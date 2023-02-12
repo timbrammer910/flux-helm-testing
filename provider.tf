@@ -5,7 +5,6 @@ provider "google" {
 
 data "google_client_config" "provider" {}
 
-
 data "google_container_cluster" "my_cluster" {
   name     = "${var.project_id}-cluster"
   location = var.region
@@ -22,16 +21,6 @@ provider "kubernetes" {
   )
 }
 
-provider "helm" {
-  kubernetes {
-    host  = "https://${data.google_container_cluster.my_cluster.endpoint}"
-    token = data.google_client_config.provider.access_token
-    cluster_ca_certificate = base64decode(
-      data.google_container_cluster.my_cluster.master_auth[0].cluster_ca_certificate,
-    )
-  }
-}
-
 provider "kubectl" {
   host                   = "https://${data.google_container_cluster.my_cluster.endpoint}"
   cluster_ca_certificate = base64decode(
@@ -46,14 +35,6 @@ terraform {
     google = {
       source  = "hashicorp/google"
       version = "4.51.0"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "~> 2.8.0"
-    }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.17.0"
     }
     flux = {
       source  = "fluxcd/flux"

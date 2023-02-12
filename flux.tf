@@ -29,9 +29,9 @@ data "kubectl_file_documents" "install_manifests" {
   content = data.flux_install.data.content
 }
 
-# yaml decode manifest  document list
+# yaml decode manifest document list
 locals {
-  apply = [ for v in data.kubectl_file_documents.install_manifests.documents : {
+  documents = [ for v in data.kubectl_file_documents.install_manifests.documents : {
       data: yamldecode(v)
       content: v
     }
@@ -39,8 +39,8 @@ locals {
 }
 
 # Apply manifests on the cluster
-resource "kubectl_manifest" "apply" {
-  for_each   = { for v in local.apply : lower(join("/", compact([v.data.apiVersion, v.data.kind, lookup(v.data.metadata, "namespace", ""), v.data.metadata.name]))) => v.content }
+resource "kubectl_manifest" "install_flux" {
+  for_each   = { for v in local.documents : lower(join("/", compact([v.data.apiVersion, v.data.kind, lookup(v.data.metadata, "namespace", ""), v.data.metadata.name]))) => v.content }
   depends_on = [kubernetes_namespace.flux]
   yaml_body = each.value
 }
@@ -59,7 +59,7 @@ spec:
     branch: master
 YAML
 
-    depends_on = [kubectl_manifest.apply]
+    depends_on = [kubectl_manifest.install_flux]
 }
 
 resource "kubectl_manifest" "flux_nginx_helm_release" {

@@ -12,9 +12,3 @@ variable "nodes" {
   default     = 2
   description = "number of gke nodes"
 }
-
-variable "application_name" {
-  type    = string
-  default = "flux-demo"
-}
-
