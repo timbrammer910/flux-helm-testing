@@ -13,5 +13,5 @@ spec:
         - sh
         - -c
         - |
-          curl nginx-service.default.svc.cluster.local:8080
+          curl nginx-service.default.svc.cluster.local:8081
   restartPolicy: Never
